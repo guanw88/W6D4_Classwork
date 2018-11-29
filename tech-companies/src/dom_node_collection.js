@@ -17,8 +17,14 @@ class DOMNodeCollection {
     }
   }
   
-  append () {
-    
+  append (el) {
+    this.htmlElements.forEach(node = () => { //HALP THIS LOOKS RONG
+      if (el instanceof DOMNodeCollection) {
+        node.innerHTML().append(el.outerHTML());
+      } else if (el instanceof HTMLElement) {
+        console.log('html element...');
+      }
+    });
   }
 }
 
