@@ -22,12 +22,13 @@ class DOMNodeCollection {
       if (el instanceof DOMNodeCollection) {
         console.log('dom node collection');
         for (let j = 0; j < el.htmlElements.length; j++) {
-          let a = document.createElement(el.htmlElements[j].outerHTML);
-          this.htmlElements[i].appendChild(a);
+          // let a = document.createElement(el.htmlElements[j].outerHTML);
+          this.htmlElements[i].appendChild(el.htmlElements[j]);
         }
       } else if (el instanceof HTMLElement) {
         this.htmlElements[i].appendChild(el);
       } else if (typeof(el) === "string") {
+        this.htmlElements[i].innerHTML += el;
         console.log("string");
       }
     }
