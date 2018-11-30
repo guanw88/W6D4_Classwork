@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class DOMNodeCollection {\n  constructor (htmlElements) {\n    this.htmlElements = htmlElements;\n  }\n  \n  html (string) {\n    if (string === undefined) {\n      return this.htmlElements[0].innerHTML();\n    } else {\n      this.htmlElements[0].innerHTML = string;\n    }\n  }\n  \n  empty () {\n    for (let i = 0; i < this.htmlElements.length; i++) {\n      this.htmlElements[i].html(\"\");\n    }\n  }\n  \n  append (el) {\n    this.htmlElements.forEach(node = () => { //HALP THIS LOOKS RONG\n      if (el instanceof DOMNodeCollection) {\n        node.innerHTML().append(el.outerHTML());\n      } else if (el instanceof HTMLElement) {\n        console.log('html element...');\n      }\n    });\n  }\n}\n\nmodule.exports = DOMNodeCollection;\n\n//# sourceURL=webpack:///./src/dom_node_collection.js?");
+eval("class DOMNodeCollection {\n  constructor (htmlElements) {\n    this.htmlElements = htmlElements;\n  }\n  \n  html (string) {\n    if (string === undefined) {\n      return this.htmlElements[0].innerHTML;\n    } else {\n      this.htmlElements[0].innerHTML = string;\n    }\n  }\n  \n  empty () {\n    for (let i = 0; i < this.htmlElements.length; i++) {\n      this.htmlElements[i].innerHTML = \"\";\n    }\n  }\n  \n  append (el) {\n    for (let i = 0; i < this.htmlElements.length; i++) {\n      if (el instanceof DOMNodeCollection) {\n        console.log('dom node collection');\n        for (let j = 0; j < el.htmlElements.length; j++) {\n          let a = document.createElement(el.htmlElements[j].outerHTML);\n          this.htmlElements[i].appendChild(a);\n        }\n      } else if (el instanceof HTMLElement) {\n        this.htmlElements[i].appendChild(el);\n      } else if (typeof(el) === \"string\") {\n        console.log(\"string\");\n      }\n    }\n  }\n}\n\nmodule.exports = DOMNodeCollection;\n\n//# sourceURL=webpack:///./src/dom_node_collection.js?");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ eval("class DOMNodeCollection {\n  constructor (htmlElements) {\n    this.htmlEl
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection */ \"./src/dom_node_collection.js\");\n\nconst $l = (selector) => {\n  let elementList;\n  let domNodeCollection;\n  if (typeof(selector) === \"string\") {\n    console.log('should be css');\n    elementList = document.querySelectorAll(selector);\n    domNodeCollection = new DOMNodeCollection(elementList);\n    debugger;\n\n  } else if (selector instanceof HTMLElement) {\n    console.log('should be html element');\n    domNodeCollection = new DOMNodeCollection([selector]);\n  }\n  return domNodeCollection;\n};\n\nwindow.$l = $l;\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection */ \"./src/dom_node_collection.js\");\n\nconst $l = (selector) => {\n  let elementList;\n  let domNodeCollection;\n  if (typeof(selector) === \"string\") {\n    elementList = document.querySelectorAll(selector);\n    domNodeCollection = new DOMNodeCollection(elementList);\n  } else if (selector instanceof HTMLElement) {\n    domNodeCollection = new DOMNodeCollection([selector]);\n  }\n  return domNodeCollection;\n};\n\nwindow.$l = $l;\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 

@@ -5,7 +5,7 @@ class DOMNodeCollection {
   
   html (string) {
     if (string === undefined) {
-      return this.htmlElements[0].innerHTML();
+      return this.htmlElements[0].innerHTML;
     } else {
       this.htmlElements[0].innerHTML = string;
     }
@@ -13,18 +13,24 @@ class DOMNodeCollection {
   
   empty () {
     for (let i = 0; i < this.htmlElements.length; i++) {
-      this.htmlElements[i].html("");
+      this.htmlElements[i].innerHTML = "";
     }
   }
   
   append (el) {
-    this.htmlElements.forEach(node = () => { //HALP THIS LOOKS RONG
+    for (let i = 0; i < this.htmlElements.length; i++) {
       if (el instanceof DOMNodeCollection) {
-        node.innerHTML().append(el.outerHTML());
+        console.log('dom node collection');
+        for (let j = 0; j < el.htmlElements.length; j++) {
+          let a = document.createElement(el.htmlElements[j].outerHTML);
+          this.htmlElements[i].appendChild(a);
+        }
       } else if (el instanceof HTMLElement) {
-        console.log('html element...');
+        this.htmlElements[i].appendChild(el);
+      } else if (typeof(el) === "string") {
+        console.log("string");
       }
-    });
+    }
   }
 }
 
